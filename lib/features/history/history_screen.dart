@@ -41,7 +41,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
     // Navigate to the appropriate screen
     if (index == 0) {
       // Navigate to Home (Leaf Scanner)
-      Navigator.pushReplacementNamed(context, '/');
+      Navigator.pushReplacementNamed(context, '/home');
     } else if (index == 2) {
       // Navigate to Settings
       Navigator.pushReplacementNamed(context, '/settings');

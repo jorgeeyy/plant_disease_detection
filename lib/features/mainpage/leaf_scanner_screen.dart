@@ -41,7 +41,7 @@ class _LeafScannerScreenState extends State<LeafScannerScreen> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        // backgroundColor: Colors.black,
+        backgroundColor: Colors.black,
         body: FutureBuilder(
           future: _initializeCamera,
           builder: (context, snapshot) {
@@ -204,7 +204,9 @@ class _BottomControls extends StatelessWidget {
           child: IconButton(
             icon: const Icon(Icons.camera_alt, size: 32),
             color: Colors.white,
-            onPressed: () {},
+            onPressed: () {
+              Navigator.pushNamed(context, '/diagnosis');
+            },
           ),
         ),
         _Control(Icons.flash_off, "FLASH OFF"),

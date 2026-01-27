@@ -22,7 +22,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
     // Navigate to the appropriate screen
     if (index == 0) {
       // Navigate to Home (Leaf Scanner)
-      Navigator.pushReplacementNamed(context, '/');
+      Navigator.pushReplacementNamed(context, '/home');
     } else if (index == 1) {
       // Navigate to History
       Navigator.pushReplacementNamed(context, '/history');

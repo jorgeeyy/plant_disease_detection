@@ -48,7 +48,7 @@ class OnbardingScreen extends StatelessWidget {
             Spacer(),
             ElevatedButton(
               onPressed: () {
-                Navigator.pushReplacementNamed(context, '/');
+                Navigator.pushReplacementNamed(context, '/home');
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.green,

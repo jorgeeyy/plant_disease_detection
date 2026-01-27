@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'features/onboarding/onboarding_screen.dart';
 import 'features/mainpage/leaf_scanner_screen.dart';
-import 'features/history/history_screen.dart';
+import 'features/mainpage/history_screen.dart';
 import 'features/mainpage/settings_screen.dart';
-import 'features/diagnosis/diagnosis_result_screen.dart';
+import 'features/mainpage/diagnosis_result_screen.dart';
 
 void main() {
   runApp(const MyApp());

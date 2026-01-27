@@ -111,8 +111,20 @@ class _LeafScannerScreenState extends State<LeafScannerScreen> {
                 /// BOTTOM NAVIGATION BAR
                 BottomNavBar(
                   selectedIndex: _selectedNavIndex,
-                  onItemTapped: (index) =>
-                      setState(() => _selectedNavIndex = index),
+                  onItemTapped: (index) {
+                    if (index == _selectedNavIndex) return;
+
+                    setState(() => _selectedNavIndex = index);
+
+                    // Navigate to the appropriate screen
+                    if (index == 1) {
+                      // Navigate to History
+                      Navigator.pushReplacementNamed(context, '/history');
+                    } else if (index == 2) {
+                      // Navigate to Settings
+                      Navigator.pushReplacementNamed(context, '/settings');
+                    }
+                  },
                 ),
               ],
             );

@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'features/onboarding/onboarding_screen.dart';
+import 'features/mainpage/leaf_scanner_screen.dart';
+import 'features/history/history_screen.dart';
+import 'features/mainpage/settings_screen.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatefulWidget {
@@ -17,7 +20,13 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: const OnbardingScreen(),
+      initialRoute: '/onboarding',
+      routes: {
+        '/onboarding': (context) => const OnbardingScreen(),
+        '/': (context) => const LeafScannerScreen(),
+        '/history': (context) => const HistoryScreen(),
+        '/settings': (context) => const SettingsScreen(),
+      },
     );
   }
 }

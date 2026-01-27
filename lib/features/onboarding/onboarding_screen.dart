@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:plant_disease_detection/features/mainpage/leaf_scanner_screen.dart';
 
 class OnbardingScreen extends StatelessWidget {
   const OnbardingScreen({super.key});
@@ -47,7 +48,12 @@ class OnbardingScreen extends StatelessWidget {
             // SizedBox(height: 20),
             Spacer(),
             ElevatedButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => LeafScannerScreen()),
+                );
+              },
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.green,
                 padding: EdgeInsets.symmetric(horizontal: 40, vertical: 15),

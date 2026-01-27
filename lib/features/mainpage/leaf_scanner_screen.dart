@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
+import '../../widgets/bottom_nav_bar.dart';
+import 'settings_screen.dart';
 
 class LeafScannerScreen extends StatefulWidget {
   const LeafScannerScreen({super.key});
@@ -39,6 +41,7 @@ class _LeafScannerScreenState extends State<LeafScannerScreen> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        // backgroundColor: Colors.black,
         body: FutureBuilder(
           future: _initializeCamera,
           builder: (context, snapshot) {
@@ -74,7 +77,7 @@ class _LeafScannerScreenState extends State<LeafScannerScreen> {
                           height: 420,
                           child: CustomPaint(
                             size: const Size(280, 420),
-                            painter: CornerBracketsPainter(),
+                            // painter: CornerBracketsPainter(),
                           ),
                         ),
                       ),
@@ -106,46 +109,10 @@ class _LeafScannerScreenState extends State<LeafScannerScreen> {
                 ),
 
                 /// BOTTOM NAVIGATION BAR
-                Container(
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withOpacity(0.1),
-                        blurRadius: 10,
-                        offset: const Offset(0, -2),
-                      ),
-                    ],
-                  ),
-                  child: SafeArea(
-                    top: false,
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 8),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          _NavBarItem(
-                            icon: Icons.home,
-                            label: 'Home',
-                            isSelected: _selectedNavIndex == 0,
-                            onTap: () => setState(() => _selectedNavIndex = 0),
-                          ),
-                          _NavBarItem(
-                            icon: Icons.history,
-                            label: 'History',
-                            isSelected: _selectedNavIndex == 1,
-                            onTap: () => setState(() => _selectedNavIndex = 1),
-                          ),
-                          _NavBarItem(
-                            icon: Icons.person,
-                            label: 'Profile',
-                            isSelected: _selectedNavIndex == 2,
-                            onTap: () => setState(() => _selectedNavIndex = 2),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
+                BottomNavBar(
+                  selectedIndex: _selectedNavIndex,
+                  onItemTapped: (index) =>
+                      setState(() => _selectedNavIndex = index),
                 ),
               ],
             );
@@ -162,7 +129,7 @@ class _OfflineBadge extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
       decoration: BoxDecoration(
-        color: Colors.black.withOpacity(0.6),
+        color: Colors.black.withValues(alpha: 0.6),
         borderRadius: BorderRadius.circular(20),
       ),
       child: const Row(
@@ -185,12 +152,17 @@ class _SettingsButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: Colors.black.withOpacity(0.6),
+        color: Colors.black.withValues(alpha: 0.6),
         shape: BoxShape.circle,
       ),
       child: IconButton(
         icon: const Icon(Icons.settings, color: Colors.white, size: 20),
-        onPressed: () {},
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => const SettingsScreen()),
+          );
+        },
       ),
     );
   }
@@ -211,7 +183,7 @@ class _BottomControls extends StatelessWidget {
             shape: BoxShape.circle,
             boxShadow: [
               BoxShadow(
-                color: Colors.green.withOpacity(0.4),
+                color: Colors.green.withValues(alpha: 0.4),
                 blurRadius: 12,
                 spreadRadius: 2,
               ),
@@ -262,104 +234,68 @@ class _Control extends StatelessWidget {
   }
 }
 
-class _NavBarItem extends StatelessWidget {
-  final IconData icon;
-  final String label;
-  final bool isSelected;
-  final VoidCallback onTap;
-
-  const _NavBarItem({
-    required this.icon,
-    required this.label,
-    required this.isSelected,
-    required this.onTap,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return InkWell(
-      onTap: onTap,
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Icon(icon, color: isSelected ? Colors.green : Colors.grey, size: 24),
-          const SizedBox(height: 4),
-          Text(
-            label,
-            style: TextStyle(
-              color: isSelected ? Colors.green : Colors.grey,
-              fontSize: 12,
-              fontWeight: isSelected ? FontWeight.w600 : FontWeight.w400,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
 /// Custom painter for corner brackets
-class CornerBracketsPainter extends CustomPainter {
-  @override
-  void paint(Canvas canvas, Size size) {
-    final paint = Paint()
-      ..color = Colors.white
-      ..style = PaintingStyle.stroke
-      ..strokeWidth = 3.0
-      ..strokeCap = StrokeCap.round;
+// class CornerBracketsPainter extends CustomPainter {
+//   @override
+//   void paint(Canvas canvas, Size size) {
+//     final paint = Paint()
+//       ..color = Colors.white
+//       ..style = PaintingStyle.stroke
+//       ..strokeWidth = 3.0
+//       ..strokeCap = StrokeCap.round;
 
-    const bracketLength = 30.0;
-    const padding = 10.0;
+//     const bracketLength = 30.0;
+//     const padding = 10.0;
 
-    // Top-left corner
-    canvas.drawLine(
-      const Offset(padding, padding + bracketLength),
-      const Offset(padding, padding),
-      paint,
-    );
-    canvas.drawLine(
-      const Offset(padding, padding),
-      const Offset(padding + bracketLength, padding),
-      paint,
-    );
+//     // Top-left corner
+//     canvas.drawLine(
+//       const Offset(padding, padding + bracketLength),
+//       const Offset(padding, padding),
+//       paint,
+//     );
+//     canvas.drawLine(
+//       const Offset(padding, padding),
+//       const Offset(padding + bracketLength, padding),
+//       paint,
+//     );
 
-    // Top-right corner
-    canvas.drawLine(
-      Offset(size.width - padding - bracketLength, padding),
-      Offset(size.width - padding, padding),
-      paint,
-    );
-    canvas.drawLine(
-      Offset(size.width - padding, padding),
-      Offset(size.width - padding, padding + bracketLength),
-      paint,
-    );
+//     // Top-right corner
+//     canvas.drawLine(
+//       Offset(size.width - padding - bracketLength, padding),
+//       Offset(size.width - padding, padding),
+//       paint,
+//     );
+//     canvas.drawLine(
+//       Offset(size.width - padding, padding),
+//       Offset(size.width - padding, padding + bracketLength),
+//       paint,
+//     );
 
-    // Bottom-left corner
-    canvas.drawLine(
-      Offset(padding, size.height - padding - bracketLength),
-      Offset(padding, size.height - padding),
-      paint,
-    );
-    canvas.drawLine(
-      Offset(padding, size.height - padding),
-      Offset(padding + bracketLength, size.height - padding),
-      paint,
-    );
+//     // Bottom-left corner
+//     canvas.drawLine(
+//       Offset(padding, size.height - padding - bracketLength),
+//       Offset(padding, size.height - padding),
+//       paint,
+//     );
+//     canvas.drawLine(
+//       Offset(padding, size.height - padding),
+//       Offset(padding + bracketLength, size.height - padding),
+//       paint,
+//     );
 
-    // Bottom-right corner
-    canvas.drawLine(
-      Offset(size.width - padding - bracketLength, size.height - padding),
-      Offset(size.width - padding, size.height - padding),
-      paint,
-    );
-    canvas.drawLine(
-      Offset(size.width - padding, size.height - padding),
-      Offset(size.width - padding, size.height - padding - bracketLength),
-      paint,
-    );
-  }
+//     // Bottom-right corner
+//     canvas.drawLine(
+//       Offset(size.width - padding - bracketLength, size.height - padding),
+//       Offset(size.width - padding, size.height - padding),
+//       paint,
+//     );
+//     canvas.drawLine(
+//       Offset(size.width - padding, size.height - padding),
+//       Offset(size.width - padding, size.height - padding - bracketLength),
+//       paint,
+//     );
+//   }
 
-  @override
-  bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
-}
+//   @override
+//   bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
+// }

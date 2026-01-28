@@ -33,233 +33,302 @@ class DiagnosisResultScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            /// Plant Image Section
-            Center(
-              child: Container(
-                width: double.infinity,
-                height: 250,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(24),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withValues(alpha: 0.1),
-                      blurRadius: 20,
-                      offset: const Offset(0, 10),
+            Container(
+              width: double.infinity,
+              height: 50,
+              decoration: BoxDecoration(color: Colors.red[50]),
+              child: const Center(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(Icons.warning, color: Colors.red, size: 20),
+                    SizedBox(width: 8),
+                    Text(
+                      "STATUS: DISEASED",
+                      style: TextStyle(
+                        color: Colors.red,
+                        fontSize: 18,
+                        fontWeight: FontWeight.w600,
+                      ),
                     ),
                   ],
                 ),
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(24),
-                  child: Image.network(
-                    'https://images.unsplash.com/photo-1592150621344-82839b6fc236?q=80&w=2070&auto=format&fit=crop', // Placeholder tomato leaf image
-                    fit: BoxFit.cover,
-                  ),
+              ),
+            ),
+            const SizedBox(height: 16),
+            Container(
+              width: double.infinity,
+              height: 300,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(12),
+                image: DecorationImage(
+                  image: AssetImage("assets/images/diseased-leaf.png"),
+                  fit: BoxFit.cover,
                 ),
               ),
             ),
-            const SizedBox(height: 24),
-
-            /// Disease Header Section
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                const Column(
+            SizedBox(height: 10),
+            Text(
+              'Late Blight',
+              style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+            ),
+            SizedBox(height: 2),
+            Text(
+              "Phytophthora infestans",
+              style: TextStyle(color: Colors.grey[600]),
+            ),
+            SizedBox(height: 10),
+            Card(
+              color: Colors.white,
+              child: Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [Text('AI Confidence'), Text('95%')],
+                ),
+              ),
+            ),
+            SizedBox(height: 10),
+            Card(
+              color: Colors.white,
+              child: Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      "Tomato Early Blight",
+                      'About this disease',
                       style: TextStyle(
-                        fontSize: 24,
                         fontWeight: FontWeight.bold,
-                        color: Color(0xFF1B4332),
+                        fontSize: 20,
                       ),
                     ),
+                    SizedBox(height: 5),
                     Text(
-                      "Solanum lycopersicum",
-                      style: TextStyle(
-                        fontSize: 14,
-                        fontStyle: FontStyle.italic,
-                        color: Colors.grey,
-                      ),
+                      'A destructive fungal disease causing dark lesions on stems and leaves. It spreads rapidly in cool, wet weather and can destroy a crop within days if left untreated.',
+                      style: TextStyle(color: Colors.black87),
                     ),
                   ],
                 ),
-                Container(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 12,
-                    vertical: 8,
-                  ),
-                  decoration: BoxDecoration(
-                    color: Colors.green.withValues(alpha: 0.1),
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  child: const Text(
-                    "98% Match",
-                    style: TextStyle(
-                      color: Colors.green,
-                      fontWeight: FontWeight.w600,
-                      fontSize: 14,
-                    ),
-                  ),
+              ),
+            ),
+            SizedBox(height: 10),
+            Row(
+              children: [
+                Icon(Icons.medication, color: Colors.green),
+                SizedBox(width: 5),
+                Text(
+                  'Treatment Advice',
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
                 ),
               ],
             ),
-            const SizedBox(height: 24),
-
-            /// Description Section
-            const Text(
-              "About the Disease",
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.w700,
-                color: Color(0xFF1B4332),
-              ),
-            ),
-            const SizedBox(height: 12),
-            const Text(
-              "Early blight is caused by the fungus Alternaria solani. It can affect leaves, stems, and fruits of plants like tomato and potato. Symptoms include small, dark brown spots with concentric rings that look like a target.",
-              style: TextStyle(
-                fontSize: 15,
-                height: 1.6,
-                color: Colors.black54,
-              ),
-            ),
-            const SizedBox(height: 24),
-
-            /// Treatment Section
-            const Text(
-              "Suggested Treatment",
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.w700,
-                color: Color(0xFF1B4332),
-              ),
-            ),
-            const SizedBox(height: 16),
-            _buildTreatmentItem(
-              Icons.cut,
-              "Remove infected leaves",
-              "Carefully prune and dispose of any foliage that shows signs of spots.",
-            ),
-            _buildTreatmentItem(
-              Icons.water_drop,
-              "Water at the base",
-              "Avoid overhead watering to keep foliage dry and prevent fungal spread.",
-            ),
-            _buildTreatmentItem(
-              Icons.agriculture,
-              "Apply fungicide",
-              "Use copper-based fungicides or those containing chlorothalonil if needed.",
-            ),
-            const SizedBox(height: 32),
-
-            /// Bottom Action Button
-            SizedBox(
-              width: double.infinity,
-              height: 56,
-              child: ElevatedButton(
-                onPressed: () => Navigator.pop(context),
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xFF2D6A4F),
-                  foregroundColor: Colors.white,
-                  shape: RoundedRectangleChild(
-                    borderRadius: BorderRadius.circular(16),
+            SizedBox(height: 10),
+            Card(
+              color: Colors.white,
+              child: Column(
+                children: [
+                  Container(
+                    color: Colors.green[50],
+                    child: Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            'Organic Solutions'.toUpperCase(),
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: Colors.green,
+                              fontSize: 16,
+                            ),
+                          ),
+                          Icon(Icons.eco, size: 25, color: Colors.green),
+                        ],
+                      ),
+                    ),
                   ),
-                  elevation: 0,
+                  Container(
+                    padding: EdgeInsets.all(10),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Container(
+                          height: 50,
+                          width: 50,
+                          padding: EdgeInsets.all(10),
+                          decoration: BoxDecoration(
+                            color: Colors.greenAccent[100],
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          child: Icon(Icons.water_drop, color: Colors.green),
+                        ),
+                        SizedBox(width: 20),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Neem Oil Application',
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 20,
+                                ),
+                              ),
+                              SizedBox(height: 5),
+                              Text(
+                                'Mix 2 tbsp per gallon of water. Spray thoroughly every 7 days to disrupt fungal growth.',
+                                style: TextStyle(),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            SizedBox(height: 10),
+            Card(
+              color: Colors.white,
+              child: Column(
+                children: [
+                  Container(
+                    color: Colors.green[50],
+                    child: Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            'Chemical Solution'.toUpperCase(),
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: Color(0xFF4838D7),
+                              fontSize: 16,
+                            ),
+                          ),
+                          Icon(
+                            Icons.science,
+                            size: 25,
+                            color: Color(0xFF4838D7),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  Container(
+                    padding: EdgeInsets.all(10),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Container(
+                          height: 50,
+                          width: 50,
+                          padding: EdgeInsets.all(10),
+                          decoration: BoxDecoration(
+                            color: Color.fromARGB(255, 211, 215, 248),
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          child: Icon(
+                            Icons.vaccines,
+                            color: Color(0xFF4838D7),
+                            size: 30,
+                          ),
+                        ),
+                        SizedBox(width: 20),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Neem Oil Application',
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 20,
+                                ),
+                              ),
+                              SizedBox(height: 5),
+                              Text(
+                                'Mix 2 tbsp per gallon of water. Spray thoroughly every 7 days to disrupt fungal growth.',
+                                style: TextStyle(),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+      bottomNavigationBar: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: const BorderRadius.vertical(top: Radius.circular(20)),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withValues(alpha: 0.1),
+              blurRadius: 10,
+              offset: const Offset(0, -4),
+            ),
+          ],
+        ),
+        child: Row(
+          children: [
+            Expanded(
+              child: OutlinedButton.icon(
+                onPressed: () {},
+                icon: const Icon(Icons.save, color: Colors.green, size: 20),
+                label: const Text(
+                  'Save Scan',
+                  style: TextStyle(
+                    color: Colors.green,
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
-                child: const Text(
-                  "Scan Another Plant",
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+                style: OutlinedButton.styleFrom(
+                  side: BorderSide(color: Colors.green, width: 2),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(30),
+                  ),
                 ),
               ),
             ),
-            const SizedBox(height: 16),
+            const SizedBox(width: 12),
+            Expanded(
+              child: ElevatedButton.icon(
+                onPressed: () {},
+                icon: const Icon(
+                  Icons.center_focus_strong,
+                  color: Colors.white,
+                  size: 25,
+                ),
+                label: const Text(
+                  'Take Another',
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
+                ),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.green,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(30),
+                  ),
+                ),
+              ),
+            ),
           ],
         ),
       ),
     );
-  }
-
-  Widget _buildTreatmentItem(IconData icon, String title, String description) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 20),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Container(
-            padding: const EdgeInsets.all(10),
-            decoration: BoxDecoration(
-              color: const Color(0xFF2D6A4F).withValues(alpha: 0.1),
-              borderRadius: BorderRadius.circular(12),
-            ),
-            child: Icon(icon, color: const Color(0xFF2D6A4F), size: 24),
-          ),
-          const SizedBox(width: 16),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  title,
-                  style: const TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w600,
-                    color: Color(0xFF1B4332),
-                  ),
-                ),
-                const SizedBox(height: 4),
-                Text(
-                  description,
-                  style: const TextStyle(fontSize: 14, color: Colors.black54),
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class RoundedRectangleChild extends OutlinedBorder {
-  final BorderRadiusGeometry borderRadius;
-
-  const RoundedRectangleChild({this.borderRadius = BorderRadius.zero});
-
-  @override
-  OutlinedBorder copyWith({
-    BorderSide? side,
-    BorderRadiusGeometry? borderRadius,
-  }) {
-    return RoundedRectangleChild(
-      borderRadius: borderRadius ?? this.borderRadius,
-    );
-  }
-
-  @override
-  EdgeInsetsGeometry get dimensions => EdgeInsets.all(side.width);
-
-  @override
-  Path getInnerPath(Rect rect, {TextDirection? textDirection}) {
-    return Path()..addRRect(
-      borderRadius.resolve(textDirection).toRRect(rect).deflate(side.width),
-    );
-  }
-
-  @override
-  Path getOuterPath(Rect rect, {TextDirection? textDirection}) {
-    return Path()..addRRect(borderRadius.resolve(textDirection).toRRect(rect));
-  }
-
-  @override
-  void paint(Canvas canvas, Rect rect, {TextDirection? textDirection}) {
-    if (rect.isEmpty) return;
-    final RRect rrect = borderRadius.resolve(textDirection).toRRect(rect);
-    canvas.drawRRect(rrect, side.toPaint());
-  }
-
-  @override
-  ShapeBorder scale(double t) {
-    return RoundedRectangleChild(borderRadius: borderRadius * t);
   }
 }

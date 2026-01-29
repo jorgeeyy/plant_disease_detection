@@ -61,6 +61,11 @@ flutter:
   assets:
     - assets/images/person-leaf.png
     - assets/images/diseased-leaf.png
+    - assets/images/basil.png
+    - assets/images/blight.png
+    - assets/images/mildew.png
+    - assets/images/monstera.png
+    - assets/images/mosaic.png
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

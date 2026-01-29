@@ -11,28 +11,6 @@ class HistoryScreen extends StatefulWidget {
 class _HistoryScreenState extends State<HistoryScreen> {
   int _selectedNavIndex = 1; // History is index 1
 
-  // Sample history data
-  final List<Map<String, dynamic>> _scanHistory = [
-    {
-      'plant': 'Tomato',
-      'disease': 'Early Blight',
-      'date': '2026-01-25',
-      'confidence': '95%',
-    },
-    {
-      'plant': 'Potato',
-      'disease': 'Late Blight',
-      'date': '2026-01-24',
-      'confidence': '88%',
-    },
-    {
-      'plant': 'Corn',
-      'disease': 'Healthy',
-      'date': '2026-01-23',
-      'confidence': '92%',
-    },
-  ];
-
   void _handleNavigation(int index) {
     if (index == _selectedNavIndex) return;
 
@@ -53,96 +31,137 @@ class _HistoryScreenState extends State<HistoryScreen> {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          title: const Text('Scan History'),
-          backgroundColor: Colors.green,
-          foregroundColor: Colors.white,
-          automaticallyImplyLeading: false,
+          centerTitle: true,
+          title: Text(
+            'Scan History',
+            style: TextStyle(fontWeight: FontWeight.bold),
+          ),
+          // backgroundColor: Colors.white,
+          // foregroundColor: Colors.white,
+          // automaticallyImplyLeading: false,
         ),
-        body: Column(
-          children: [
-            Expanded(
-              child: _scanHistory.isEmpty
-                  ? const Center(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Icon(Icons.history, size: 64, color: Colors.grey),
-                          SizedBox(height: 16),
-                          Text(
-                            'No scan history yet',
-                            style: TextStyle(fontSize: 18, color: Colors.grey),
-                          ),
-                        ],
+        body: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    ElevatedButton(
+                      onPressed: () {},
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.black,
                       ),
-                    )
-                  : ListView.builder(
-                      itemCount: _scanHistory.length,
-                      padding: const EdgeInsets.all(16),
-                      itemBuilder: (context, index) {
-                        final scan = _scanHistory[index];
-                        return Card(
-                          margin: const EdgeInsets.only(bottom: 12),
-                          elevation: 2,
-                          child: ListTile(
-                            contentPadding: const EdgeInsets.all(16),
-                            leading: CircleAvatar(
-                              backgroundColor: scan['disease'] == 'Healthy'
-                                  ? Colors.green
-                                  : Colors.orange,
-                              child: Icon(
-                                scan['disease'] == 'Healthy'
-                                    ? Icons.check
-                                    : Icons.warning,
-                                color: Colors.white,
-                              ),
+                      child: Text(
+                        'All Scans',
+                        style: TextStyle(color: Colors.white),
+                      ),
+                    ),
+                    ElevatedButton(
+                      onPressed: () {},
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.white,
+                      ),
+                      child: Text(
+                        'Diseased',
+                        style: TextStyle(color: Colors.black),
+                      ),
+                    ),
+                    ElevatedButton(
+                      onPressed: () {},
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.white,
+                      ),
+                      child: Text(
+                        'Healthy',
+                        style: TextStyle(color: Colors.black),
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(height: 20),
+                Text(
+                  'this week'.toUpperCase(),
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: Colors.grey[600],
+                  ),
+                ),
+                SizedBox(height: 20),
+                Card(
+                  color: Colors.white,
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Container(
+                          height: 100,
+                          width: 100,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(12),
+                            image: DecorationImage(
+                              image: AssetImage('assets/images/blight.png'),
+                              fit: BoxFit.cover,
                             ),
-                            title: Text(
-                              scan['plant'],
-                              style: const TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 16,
-                              ),
-                            ),
-                            subtitle: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                const SizedBox(height: 4),
-                                Text(
-                                  scan['disease'],
+                          ),
+                        ),
+                        SizedBox(width: 10),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Container(
+                                padding: EdgeInsets.symmetric(
+                                  horizontal: 8,
+                                  vertical: 2,
+                                ),
+                                decoration: BoxDecoration(
+                                  color: Colors.red[50],
+                                  borderRadius: BorderRadius.circular(12),
+                                ),
+                                child: Text(
+                                  'Diseased',
                                   style: TextStyle(
-                                    color: scan['disease'] == 'Healthy'
-                                        ? Colors.green
-                                        : Colors.orange,
-                                    fontWeight: FontWeight.w500,
+                                    color: Colors.red,
+                                    fontWeight: FontWeight.bold,
                                   ),
                                 ),
-                                const SizedBox(height: 4),
-                                Text(
-                                  'Date: ${scan['date']}',
-                                  style: const TextStyle(fontSize: 12),
+                              ),
+                              const SizedBox(height: 5),
+                              Text(
+                                'Early Blight',
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 16,
                                 ),
-                                Text(
-                                  'Confidence: ${scan['confidence']}',
-                                  style: const TextStyle(fontSize: 12),
-                                ),
-                              ],
-                            ),
-                            trailing: IconButton(
-                              icon: const Icon(Icons.chevron_right),
-                              onPressed: () {
-                                // TODO: Navigate to detailed scan result
-                              },
-                            ),
+                              ),
+
+                              SizedBox(height: 25),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text('Oct 24, 2023'),
+                                  Text('96% Confident'),
+                                ],
+                              ),
+                            ],
                           ),
-                        );
-                      },
+                        ),
+                      ],
                     ),
+                  ),
+                ),
+              ],
             ),
-            BottomNavBar(
-              selectedIndex: _selectedNavIndex,
-              onItemTapped: _handleNavigation,
-            ),
-          ],
+          ),
+        ),
+        bottomNavigationBar: BottomNavBar(
+          selectedIndex: _selectedNavIndex,
+          onItemTapped: _handleNavigation,
         ),
       ),
     );

@@ -6,9 +6,9 @@ class DiagnosisResultScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF5F9F7),
+      // backgroundColor: const Color(0xFFF5F9F7),
       appBar: AppBar(
-        backgroundColor: Colors.transparent,
+        // backgroundColor: Colors.transparent,
         elevation: 0,
         leading: IconButton(
           icon: const Icon(
@@ -284,12 +284,12 @@ class DiagnosisResultScreen extends StatelessWidget {
             Expanded(
               child: OutlinedButton.icon(
                 onPressed: () {},
-                icon: const Icon(Icons.save, color: Colors.green, size: 20),
+                icon: const Icon(Icons.save, color: Colors.green, size: 16),
                 label: const Text(
                   'Save Scan',
                   style: TextStyle(
                     color: Colors.green,
-                    fontSize: 20,
+                    // fontSize: 16,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
@@ -308,12 +308,12 @@ class DiagnosisResultScreen extends StatelessWidget {
                 icon: const Icon(
                   Icons.center_focus_strong,
                   color: Colors.white,
-                  size: 25,
+                  size: 16,
                 ),
                 label: const Text(
                   'Take Another',
                   style: TextStyle(
-                    fontSize: 16,
+                    // fontSize: 12,
                     fontWeight: FontWeight.bold,
                     color: Colors.white,
                   ),

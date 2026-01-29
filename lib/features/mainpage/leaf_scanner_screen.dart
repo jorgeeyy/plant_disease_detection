@@ -39,99 +39,99 @@ class _LeafScannerScreenState extends State<LeafScannerScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        backgroundColor: Colors.black,
-        body: FutureBuilder(
-          future: _initializeCamera,
-          builder: (context, snapshot) {
-            if (snapshot.connectionState != ConnectionState.done) {
-              return const Center(child: CircularProgressIndicator());
-            }
+    return Scaffold(
 
-            return Column(
-              children: [
-                /// CAMERA PREVIEW SECTION
-                Expanded(
-                  child: Stack(
-                    fit: StackFit.expand,
-                    children: [
-                      /// CAMERA FEED
-                      CameraPreview(_controller),
+        body: SafeArea(
+          child: FutureBuilder(
+            future: _initializeCamera,
+            builder: (context, snapshot) {
+              if (snapshot.connectionState != ConnectionState.done) {
+                return const Center(child: CircularProgressIndicator());
+              }
 
-                      /// TOP OVERLAY (Offline + Settings)
-                      Positioned(
-                        top: 16,
-                        left: 16,
-                        right: 16,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [_OfflineBadge(), _SettingsButton()],
-                        ),
-                      ),
+              return Column(
+                children: [
+                  /// CAMERA PREVIEW SECTION
+                  Expanded(
+                    child: Stack(
+                      fit: StackFit.expand,
+                      children: [
+                        /// CAMERA FEED
+                        CameraPreview(_controller),
 
-                      /// CORNER BRACKETS
-                      Center(
-                        child: SizedBox(
-                          width: 280,
-                          height: 420,
-                          child: CustomPaint(
-                            size: const Size(280, 420),
-                            // painter: CornerBracketsPainter(),
+                        /// TOP OVERLAY (Offline + Settings)
+                        Positioned(
+                          top: 16,
+                          left: 16,
+                          right: 16,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [_OfflineBadge(), _SettingsButton()],
                           ),
                         ),
-                      ),
 
-                      /// HELPER TEXT
-                      const Positioned(
-                        bottom: 16,
-                        left: 0,
-                        right: 0,
-                        child: Text(
-                          "Align leaf within the frame",
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 14,
-                            fontWeight: FontWeight.w500,
+                        /// CORNER BRACKETS
+                        Center(
+                          child: SizedBox(
+                            width: 280,
+                            height: 420,
+                            child: CustomPaint(
+                              size: const Size(280, 420),
+                              // painter: CornerBracketsPainter(),
+                            ),
                           ),
                         ),
-                      ),
-                    ],
+
+                        /// HELPER TEXT
+                        const Positioned(
+                          bottom: 16,
+                          left: 0,
+                          right: 0,
+                          child: Text(
+                            "Align leaf within the frame",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 14,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
-                ),
 
-                /// CAMERA CONTROLS PANEL (WHITE BACKGROUND)
-                Container(
-                  color: Colors.white,
-                  padding: const EdgeInsets.symmetric(vertical: 20),
-                  child: _BottomControls(),
-                ),
+                  /// CAMERA CONTROLS PANEL (WHITE BACKGROUND)
+                  Container(
+                    color: Colors.white,
+                    padding: const EdgeInsets.symmetric(vertical: 20),
+                    child: _BottomControls(),
+                  ),
 
-                /// BOTTOM NAVIGATION BAR
-                BottomNavBar(
-                  selectedIndex: _selectedNavIndex,
-                  onItemTapped: (index) {
-                    if (index == _selectedNavIndex) return;
+                  /// BOTTOM NAVIGATION BAR
+                  BottomNavBar(
+                    selectedIndex: _selectedNavIndex,
+                    onItemTapped: (index) {
+                      if (index == _selectedNavIndex) return;
 
-                    setState(() => _selectedNavIndex = index);
+                      setState(() => _selectedNavIndex = index);
 
-                    // Navigate to the appropriate screen
-                    if (index == 1) {
-                      // Navigate to History
-                      Navigator.pushReplacementNamed(context, '/history');
-                    } else if (index == 2) {
-                      // Navigate to Settings
-                      Navigator.pushReplacementNamed(context, '/settings');
-                    }
-                  },
-                ),
-              ],
-            );
-          },
+                      // Navigate to the appropriate screen
+                      if (index == 1) {
+                        // Navigate to History
+                        Navigator.pushReplacementNamed(context, '/history');
+                      } else if (index == 2) {
+                        // Navigate to Settings
+                        Navigator.pushReplacementNamed(context, '/settings');
+                      }
+                    },
+                  ),
+                ],
+              );
+            },
+          ),
         ),
-      ),
-    );
+      );
   }
 }
 

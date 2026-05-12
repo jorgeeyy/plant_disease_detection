@@ -41,7 +41,7 @@ class OnbardingScreen extends StatelessWidget {
             const SizedBox(height: 20),
             const Text(
               'Snap a photo and get a diagnosis in seconds using AI-powered analysis.',
-              style: TextStyle(fontSize: 18, color: Colors.black87),
+              style: TextStyle(fontSize: 18),
               textAlign: TextAlign.center,
             ),
             // SizedBox(height: 20),

@@ -101,9 +101,9 @@ class _LeafScannerScreenState extends State<LeafScannerScreen> {
                     ),
                   ),
 
-                  /// CAMERA CONTROLS PANEL (WHITE BACKGROUND)
+                  /// CAMERA CONTROLS PANEL
                   Container(
-                    color: Colors.white,
+                    color: Theme.of(context).colorScheme.surface,
                     padding: const EdgeInsets.symmetric(vertical: 20),
                     child: _BottomControls(),
                   ),
@@ -229,16 +229,20 @@ class _Control extends StatelessWidget {
         Container(
           padding: const EdgeInsets.all(8),
           decoration: BoxDecoration(
-            color: Colors.grey[200],
+            color: Theme.of(context).colorScheme.secondaryContainer,
             shape: BoxShape.circle,
           ),
-          child: Icon(icon, color: Colors.grey[700], size: 24),
+          child: Icon(
+            icon,
+            color: Theme.of(context).colorScheme.onSecondaryContainer,
+            size: 24,
+          ),
         ),
         const SizedBox(height: 6),
         Text(
           label,
           style: TextStyle(
-            color: Colors.grey[700],
+            color: Theme.of(context).colorScheme.onSurface,
             fontSize: 10,
             fontWeight: FontWeight.w500,
           ),

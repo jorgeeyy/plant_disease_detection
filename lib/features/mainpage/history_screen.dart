@@ -52,31 +52,31 @@ class _HistoryScreenState extends State<HistoryScreen> {
                       ElevatedButton(
                         onPressed: () {},
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.black,
+                          backgroundColor: Theme.of(context).colorScheme.primary,
                         ),
                         child: Text(
                           'All Scans',
-                          style: TextStyle(color: Colors.white),
+                          style: TextStyle(color: Theme.of(context).colorScheme.onPrimary),
                         ),
                       ),
                       ElevatedButton(
                         onPressed: () {},
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.white,
+                          backgroundColor: Theme.of(context).colorScheme.surface,
                         ),
                         child: Text(
                           'Diseased',
-                          style: TextStyle(color: Colors.black),
+                          style: TextStyle(color: Theme.of(context).colorScheme.onSurface),
                         ),
                       ),
                       ElevatedButton(
                         onPressed: () {},
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.white,
+                          backgroundColor: Theme.of(context).colorScheme.surface,
                         ),
                         child: Text(
                           'Healthy',
-                          style: TextStyle(color: Colors.black),
+                          style: TextStyle(color: Theme.of(context).colorScheme.onSurface),
                         ),
                       ),
                     ],
@@ -86,12 +86,11 @@ class _HistoryScreenState extends State<HistoryScreen> {
                     'this week'.toUpperCase(),
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
-                      color: Colors.grey[600],
+                      color: Theme.of(context).colorScheme.outline,
                     ),
                   ),
                   SizedBox(height: 20),
                   Card(
-                    color: Colors.white,
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Row(
@@ -119,7 +118,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
                                     vertical: 2,
                                   ),
                                   decoration: BoxDecoration(
-                                    color: Colors.red[50],
+                                    color: Colors.red.withValues(alpha: 0.1),
                                     borderRadius: BorderRadius.circular(12),
                                   ),
                                   child: Text(

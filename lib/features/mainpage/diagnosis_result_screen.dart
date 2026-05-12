@@ -13,7 +13,6 @@ class DiagnosisResultScreen extends StatelessWidget {
         leading: IconButton(
           icon: const Icon(
             Icons.arrow_back_ios_new,
-            color: Colors.black87,
             size: 20,
           ),
           onPressed: () => Navigator.pop(context),
@@ -21,7 +20,6 @@ class DiagnosisResultScreen extends StatelessWidget {
         title: const Text(
           "Diagnosis Result",
           style: TextStyle(
-            color: Colors.black87,
             fontSize: 18,
             fontWeight: FontWeight.w600,
           ),
@@ -36,7 +34,7 @@ class DiagnosisResultScreen extends StatelessWidget {
             Container(
               width: double.infinity,
               height: 50,
-              decoration: BoxDecoration(color: Colors.red[50]),
+              decoration: BoxDecoration(color: Colors.red.withValues(alpha: 0.1)),
               child: const Center(
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -75,11 +73,10 @@ class DiagnosisResultScreen extends StatelessWidget {
             SizedBox(height: 2),
             Text(
               "Phytophthora infestans",
-              style: TextStyle(color: Colors.grey[600]),
+              style: TextStyle(color: Theme.of(context).colorScheme.outline),
             ),
             SizedBox(height: 10),
             Card(
-              color: Colors.white,
               child: Padding(
                 padding: const EdgeInsets.all(10.0),
                 child: Row(
@@ -90,7 +87,6 @@ class DiagnosisResultScreen extends StatelessWidget {
             ),
             SizedBox(height: 10),
             Card(
-              color: Colors.white,
               child: Padding(
                 padding: const EdgeInsets.all(10.0),
                 child: Column(
@@ -106,7 +102,7 @@ class DiagnosisResultScreen extends StatelessWidget {
                     SizedBox(height: 5),
                     Text(
                       'A destructive fungal disease causing dark lesions on stems and leaves. It spreads rapidly in cool, wet weather and can destroy a crop within days if left untreated.',
-                      style: TextStyle(color: Colors.black87),
+                      style: TextStyle(),
                     ),
                   ],
                 ),
@@ -125,11 +121,10 @@ class DiagnosisResultScreen extends StatelessWidget {
             ),
             SizedBox(height: 10),
             Card(
-              color: Colors.white,
               child: Column(
                 children: [
                   Container(
-                    color: Colors.green[50],
+                    color: Colors.green.withValues(alpha: 0.1),
                     child: Padding(
                       padding: const EdgeInsets.all(10.0),
                       child: Row(
@@ -158,7 +153,7 @@ class DiagnosisResultScreen extends StatelessWidget {
                           width: 50,
                           padding: EdgeInsets.all(10),
                           decoration: BoxDecoration(
-                            color: Colors.greenAccent[100],
+                            color: Colors.green.withValues(alpha: 0.2),
                             borderRadius: BorderRadius.circular(12),
                           ),
                           child: Icon(Icons.water_drop, color: Colors.green),
@@ -191,11 +186,10 @@ class DiagnosisResultScreen extends StatelessWidget {
             ),
             SizedBox(height: 10),
             Card(
-              color: Colors.white,
               child: Column(
                 children: [
                   Container(
-                    color: Colors.green[50],
+                    color: Theme.of(context).colorScheme.primaryContainer,
                     child: Padding(
                       padding: const EdgeInsets.all(10.0),
                       child: Row(
@@ -228,7 +222,7 @@ class DiagnosisResultScreen extends StatelessWidget {
                           width: 50,
                           padding: EdgeInsets.all(10),
                           decoration: BoxDecoration(
-                            color: Color.fromARGB(255, 211, 215, 248),
+                            color: Theme.of(context).colorScheme.secondaryContainer,
                             borderRadius: BorderRadius.circular(12),
                           ),
                           child: Icon(
@@ -269,7 +263,7 @@ class DiagnosisResultScreen extends StatelessWidget {
       bottomNavigationBar: Container(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: Theme.of(context).colorScheme.surface,
           borderRadius: const BorderRadius.vertical(top: Radius.circular(20)),
           boxShadow: [
             BoxShadow(

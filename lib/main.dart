@@ -3,7 +3,6 @@ import 'features/onboarding/onboarding_screen.dart';
 import 'features/mainpage/leaf_scanner_screen.dart';
 import 'features/mainpage/history_screen.dart';
 import 'features/mainpage/settings_screen.dart';
-import 'features/mainpage/diagnosis_result_screen.dart';
 
 import 'package:provider/provider.dart';
 import 'theme_manager.dart';
@@ -49,7 +48,6 @@ class MyApp extends StatelessWidget {
         '/home': (context) => const LeafScannerScreen(),
         '/history': (context) => const HistoryScreen(),
         '/settings': (context) => const SettingsScreen(),
-        '/diagnosis': (context) => const DiagnosisResultScreen(),
       },
     );
   }

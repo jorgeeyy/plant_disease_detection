@@ -37,6 +37,11 @@ dependencies:
   camera: ^0.11.3
   provider: ^6.1.5+1
   shared_preferences: ^2.5.5
+  tflite_flutter: ^0.12.1
+  image: ^4.8.0
+  path_provider: ^2.1.5
+  path: ^1.9.1
+  image_picker: ^1.2.2
 
 dev_dependencies:
   flutter_test:
@@ -68,6 +73,7 @@ flutter:
     - assets/images/mildew.png
     - assets/images/monstera.png
     - assets/images/mosaic.png
+    - assets/models/
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

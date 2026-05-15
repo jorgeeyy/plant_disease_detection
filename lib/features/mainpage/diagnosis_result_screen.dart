@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'dart:io';
+import '../../models/diagnosis_result.dart';
 
 class DiagnosisResultScreen extends StatelessWidget {
-  const DiagnosisResultScreen({super.key});
+  final DiagnosisResult result;
+
+  const DiagnosisResultScreen({super.key, required this.result});
 
   @override
   Widget build(BuildContext context) {
@@ -35,16 +39,16 @@ class DiagnosisResultScreen extends StatelessWidget {
               width: double.infinity,
               height: 50,
               decoration: BoxDecoration(color: Colors.red.withValues(alpha: 0.1)),
-              child: const Center(
+              child: Center(
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Icon(Icons.warning, color: Colors.red, size: 20),
                     SizedBox(width: 8),
                     Text(
-                      "STATUS: DISEASED",
+                      "STATUS: ${result.confidence > 0.5 ? 'DISEASED' : 'HEALTHY'}",
                       style: TextStyle(
-                        color: Colors.red,
+                        color: result.confidence > 0.5 ? Colors.red : Colors.green,
                         fontSize: 18,
                         fontWeight: FontWeight.w600,
                       ),
@@ -60,14 +64,14 @@ class DiagnosisResultScreen extends StatelessWidget {
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(12),
                 image: DecorationImage(
-                  image: AssetImage("assets/images/diseased-leaf.png"),
+                  image: FileImage(File(result.imagePath)),
                   fit: BoxFit.cover,
                 ),
               ),
             ),
             SizedBox(height: 10),
             Text(
-              'Late Blight',
+              result.diseaseName,
               style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
             ),
             SizedBox(height: 2),
@@ -81,7 +85,10 @@ class DiagnosisResultScreen extends StatelessWidget {
                 padding: const EdgeInsets.all(10.0),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [Text('AI Confidence'), Text('95%')],
+                  children: [
+                    Text('AI Confidence'),
+                    Text('${(result.confidence * 100).toStringAsFixed(1)}%')
+                  ],
                 ),
               ),
             ),
@@ -101,7 +108,7 @@ class DiagnosisResultScreen extends StatelessWidget {
                     ),
                     SizedBox(height: 5),
                     Text(
-                      'A destructive fungal disease causing dark lesions on stems and leaves. It spreads rapidly in cool, wet weather and can destroy a crop within days if left untreated.',
+                      result.about ?? 'A plant disease identified by the AI model. Please consult a specialist for more information.',
                       style: TextStyle(),
                     ),
                   ],

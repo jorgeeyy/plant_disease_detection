@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
+import 'dart:io';
 import 'package:camera/camera.dart';
+import 'package:image_picker/image_picker.dart';
 import '../../widgets/bottom_nav_bar.dart';
 import 'settings_screen.dart';
+import '../../services/classifier.dart';
+import '../../models/diagnosis_result.dart';
+import 'diagnosis_result_screen.dart';
 
 class LeafScannerScreen extends StatefulWidget {
   const LeafScannerScreen({super.key});
@@ -13,12 +18,16 @@ class LeafScannerScreen extends StatefulWidget {
 class _LeafScannerScreenState extends State<LeafScannerScreen> {
   late CameraController _controller;
   late Future<void> _initializeCamera;
+  final Classifier _classifier = Classifier();
+  final ImagePicker _picker = ImagePicker();
   int _selectedNavIndex = 0;
+  bool _isAnalyzing = false;
 
   @override
   void initState() {
     super.initState();
     _initializeCamera = _setupCamera();
+    _classifier.loadModel();
   }
 
   Future<void> _setupCamera() async {
@@ -34,7 +43,63 @@ class _LeafScannerScreenState extends State<LeafScannerScreen> {
   @override
   void dispose() {
     _controller.dispose();
+    _classifier.dispose();
     super.dispose();
+  }
+
+  Future<void> _captureAndAnalyze() async {
+    if (_isAnalyzing) return;
+
+    try {
+      setState(() => _isAnalyzing = true);
+
+      final XFile image = await _controller.takePicture();
+      await _analyzeImage(image);
+    } catch (e) {
+      print('Error during capture: $e');
+    } finally {
+      if (mounted) {
+        setState(() => _isAnalyzing = false);
+      }
+    }
+  }
+
+  Future<void> _pickFromGallery() async {
+    if (_isAnalyzing) return;
+
+    try {
+      final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
+      if (image == null) return;
+
+      setState(() => _isAnalyzing = true);
+      await _analyzeImage(image);
+    } catch (e) {
+      print('Error picking image: $e');
+    } finally {
+      if (mounted) {
+        setState(() => _isAnalyzing = false);
+      }
+    }
+  }
+
+  Future<void> _analyzeImage(XFile image) async {
+    final result = await _classifier.classify(File(image.path));
+
+    if (mounted) {
+      final diagnosis = DiagnosisResult(
+        diseaseName: result['label'],
+        confidence: result['confidence'],
+        imagePath: image.path,
+        dateTime: DateTime.now(),
+      );
+
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => DiagnosisResultScreen(result: diagnosis),
+        ),
+      );
+    }
   }
 
   @override
@@ -97,6 +162,29 @@ class _LeafScannerScreenState extends State<LeafScannerScreen> {
                             ),
                           ),
                         ),
+
+                        /// ANALYZING OVERLAY
+                        if (_isAnalyzing)
+                          Container(
+                            color: Colors.black54,
+                            child: const Center(
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  CircularProgressIndicator(color: Colors.green),
+                                  SizedBox(height: 16),
+                                  Text(
+                                    "Analyzing leaf...",
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
                       ],
                     ),
                   ),
@@ -105,7 +193,11 @@ class _LeafScannerScreenState extends State<LeafScannerScreen> {
                   Container(
                     color: Theme.of(context).colorScheme.surface,
                     padding: const EdgeInsets.symmetric(vertical: 20),
-                    child: _BottomControls(),
+                    child: _BottomControls(
+                      onCapture: _captureAndAnalyze,
+                      onGalleryTap: _pickFromGallery,
+                      isAnalyzing: _isAnalyzing,
+                    ),
                   ),
 
                   /// BOTTOM NAVIGATION BAR
@@ -181,17 +273,27 @@ class _SettingsButton extends StatelessWidget {
 }
 
 class _BottomControls extends StatelessWidget {
+  final VoidCallback onCapture;
+  final VoidCallback onGalleryTap;
+  final bool isAnalyzing;
+
+  const _BottomControls({
+    required this.onCapture,
+    required this.onGalleryTap,
+    required this.isAnalyzing,
+  });
+
   @override
   Widget build(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
-        _Control(Icons.photo, "GALLERY"),
+        _Control(Icons.photo, "GALLERY", onTap: onGalleryTap),
         Container(
           width: 64,
           height: 64,
           decoration: BoxDecoration(
-            color: Colors.green,
+            color: isAnalyzing ? Colors.grey : Colors.green,
             shape: BoxShape.circle,
             boxShadow: [
               BoxShadow(
@@ -204,9 +306,7 @@ class _BottomControls extends StatelessWidget {
           child: IconButton(
             icon: const Icon(Icons.camera_alt, size: 32),
             color: Colors.white,
-            onPressed: () {
-              Navigator.pushNamed(context, '/diagnosis');
-            },
+            onPressed: isAnalyzing ? null : onCapture,
           ),
         ),
         _Control(Icons.flash_off, "FLASH OFF"),
@@ -218,36 +318,40 @@ class _BottomControls extends StatelessWidget {
 class _Control extends StatelessWidget {
   final IconData icon;
   final String label;
+  final VoidCallback? onTap;
 
-  const _Control(this.icon, this.label);
+  const _Control(this.icon, this.label, {this.onTap});
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Container(
-          padding: const EdgeInsets.all(8),
-          decoration: BoxDecoration(
-            color: Theme.of(context).colorScheme.secondaryContainer,
-            shape: BoxShape.circle,
+    return GestureDetector(
+      onTap: onTap,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Container(
+            padding: const EdgeInsets.all(8),
+            decoration: BoxDecoration(
+              color: Theme.of(context).colorScheme.secondaryContainer,
+              shape: BoxShape.circle,
+            ),
+            child: Icon(
+              icon,
+              color: Theme.of(context).colorScheme.onSecondaryContainer,
+              size: 24,
+            ),
           ),
-          child: Icon(
-            icon,
-            color: Theme.of(context).colorScheme.onSecondaryContainer,
-            size: 24,
+          const SizedBox(height: 6),
+          Text(
+            label,
+            style: TextStyle(
+              color: Theme.of(context).colorScheme.onSurface,
+              fontSize: 10,
+              fontWeight: FontWeight.w500,
+            ),
           ),
-        ),
-        const SizedBox(height: 6),
-        Text(
-          label,
-          style: TextStyle(
-            color: Theme.of(context).colorScheme.onSurface,
-            fontSize: 10,
-            fontWeight: FontWeight.w500,
-          ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }
